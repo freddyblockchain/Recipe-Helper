@@ -22,11 +22,10 @@ import com.example.myapplication.Models.Recipe
 import com.example.myapplication.android.Components.IngredientForm
 import com.example.myapplication.android.Components.IngredientListView
 import com.example.myapplication.android.Components.RecipesListView
-import com.example.myapplication.android.Navigation.NFTicketScreen
 import com.example.myapplication.android.SQLite.DBHandler
 
 @Composable
-fun RecipeScreen(navController: NavController, recipeName: String?) {
+fun ShopScreen(navController: NavController, recipeName: String?) {
     val db = DBHandler(LocalContext.current)
     val ingredients = remember { mutableStateListOf<Ingredient>() }
 
@@ -47,9 +46,8 @@ fun RecipeScreen(navController: NavController, recipeName: String?) {
                         navController.popBackStack()
                     }
                     .size(40.dp))
-            ArtistCard("RecipeScreen")
             Text(
-                recipeName ?: "",
+                "Shopping List",
                 textAlign = TextAlign.Center,
                 fontSize = 40.sp,
                 textDecoration = TextDecoration.Underline,
@@ -64,7 +62,7 @@ fun RecipeScreen(navController: NavController, recipeName: String?) {
                     .fillMaxWidth()
                     .padding(vertical = 20.dp)
             ) {
-                AddIngredientToRecipeButton(dbHandler = db, recipeName = recipeName!!) {
+                AddItemToCartButton(dbHandler = db, recipeName = recipeName!!) {
                     ingredients.clear(); ingredients.addAll(
                     db.readRecipeIngredients(
                         Recipe(
@@ -73,7 +71,6 @@ fun RecipeScreen(navController: NavController, recipeName: String?) {
                     )
                 )
                 }
-                StartShopviewButton(recipeName, navController)
             }
 
         }
@@ -81,12 +78,12 @@ fun RecipeScreen(navController: NavController, recipeName: String?) {
 }
 
 @Composable
-fun AddIngredientToRecipeButton(
+fun AddItemToCartButton(
     dbHandler: DBHandler,
     recipeName: String,
     onRecipeAdded: () -> Unit
 ) {
-    var openDialogState by remember { mutableStateOf(false) }
+    /*var openDialogState by remember { mutableStateOf(false) }
     IngredientForm(onSubmit = { ingredient: Ingredient ->
         dbHandler.addIngredientToRecipe(
             ingredient,
@@ -96,17 +93,13 @@ fun AddIngredientToRecipeButton(
         openDialogState = false
     }
     Button(onClick = {
+        //navController.navigate(NFTicketScreen.OtherScreen.route + "/$customText")
         openDialogState = true
     }) {
         Text(text = "Add Ingredient")
-    }
-}
-
-@Composable
-fun StartShopviewButton(recipeName: String, navController: NavController) {
+    }*/
     Button(onClick = {
-        navController.navigate(NFTicketScreen.ShopScreen.route + "/$recipeName")
     }) {
-        Text(text = "Start Shopping")
+        Text(text = "Add Item")
     }
 }

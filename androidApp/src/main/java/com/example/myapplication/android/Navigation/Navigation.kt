@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.myapplication.android.screens.HomeScreen
 import com.example.myapplication.android.screens.RecipeScreen
+import com.example.myapplication.android.screens.ShopScreen
 
 @Composable
 fun Navigation(){
@@ -22,6 +23,15 @@ fun Navigation(){
             type = NavType.StringType
         })) { entry ->
             RecipeScreen(
+                navController = navController,
+                entry.arguments?.getString("recipeName")
+            )
+        }
+        composable(route = NFTicketScreen.ShopScreen.route + "/{recipeName}",
+            arguments = listOf(navArgument(name = "recipeName") {
+                type = NavType.StringType
+            })) { entry ->
+            ShopScreen(
                 navController = navController,
                 entry.arguments?.getString("recipeName")
             )

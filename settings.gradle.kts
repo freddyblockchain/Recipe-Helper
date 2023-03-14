@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "My_Application"
+rootProject.name = "Recipe Helper"
 include(":androidApp")
 include(":shared")
