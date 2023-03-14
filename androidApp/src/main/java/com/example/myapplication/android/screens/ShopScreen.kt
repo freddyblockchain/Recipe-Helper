@@ -34,18 +34,9 @@ fun ShopScreen(navController: NavController, recipeName: String?) {
         ingredients.addAll(retrievedIngredients)
     }
     Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
+        modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
     ) {
         Column() {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Arrow Back",
-                modifier = Modifier
-                    .clickable {
-                        navController.popBackStack()
-                    }
-                    .size(40.dp))
             Text(
                 "Shopping List",
                 textAlign = TextAlign.Center,
@@ -71,6 +62,7 @@ fun ShopScreen(navController: NavController, recipeName: String?) {
                     )
                 )
                 }
+                FinishShoppingButton(navController = navController)
             }
 
         }
@@ -79,9 +71,7 @@ fun ShopScreen(navController: NavController, recipeName: String?) {
 
 @Composable
 fun AddItemToCartButton(
-    dbHandler: DBHandler,
-    recipeName: String,
-    onRecipeAdded: () -> Unit
+    dbHandler: DBHandler, recipeName: String, onRecipeAdded: () -> Unit
 ) {
     /*var openDialogState by remember { mutableStateOf(false) }
     IngredientForm(onSubmit = { ingredient: Ingredient ->
@@ -98,8 +88,14 @@ fun AddItemToCartButton(
     }) {
         Text(text = "Add Ingredient")
     }*/
-    Button(onClick = {
-    }) {
+    Button(onClick = {}) {
         Text(text = "Add Item")
+    }
+}
+
+@Composable
+fun FinishShoppingButton(navController: NavController) {
+    Button(onClick = { navController.popBackStack() }) {
+        Text(text = "Finish Shopping")
     }
 }

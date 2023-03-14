@@ -8,6 +8,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myapplication.Models.Ingredient
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RecipeCard(recipe: Recipe, onClick: (recipeName: String) -> Unit){
     CartBar(onClick = {onClick(recipe.name)}) {

@@ -12,28 +12,34 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.gestures.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Check
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CartBar(onClick: () -> Unit = {}, content: @Composable() (RowScope.() -> Unit)) {
     val cardHeight = 70.dp
-
     val swipeableState = rememberSwipeableState(0)
-    val sizePx = with(LocalDensity.current) { cardHeight.toPx() }
     val maxWidth =
-        with(LocalDensity.current) { (LocalConfiguration.current.screenWidthDp.dp - 60.dp).toPx() }
+        with(LocalDensity.current) { (LocalConfiguration.current.screenWidthDp.dp - 45.dp).toPx() }
     val anchors = mapOf(0f to 0, maxWidth to 1) // Maps anchor points (in px) to states
+    val coroutine = rememberCoroutineScope()
     Box(
-        modifier = Modifier.swipeable(
-            state = swipeableState,
-            anchors = anchors,
-            thresholds = { _, _ -> FractionalThreshold(0.3f) },
-            orientation = Orientation.Horizontal
-        ).offset() { IntOffset(swipeableState.offset.value.roundToInt(), 0) }
+        modifier = Modifier
+            .swipeable(
+                state = swipeableState,
+                anchors = anchors,
+                thresholds = { _, _ -> FractionalThreshold(0.5f) },
+                orientation = Orientation.Horizontal,
+
+                )
+            .offset() { IntOffset(swipeableState.offset.value.roundToInt(), 0) }
     ) {
         Card(
             modifier = Modifier
@@ -54,6 +60,16 @@ fun CartBar(onClick: () -> Unit = {}, content: @Composable() (RowScope.() -> Uni
                 modifier = Modifier.fillMaxHeight()
             ) {
                 content()
+                Icon(
+                    Icons.Outlined.Check,
+                    contentDescription = "Ingredient Collected Button",
+                    modifier = Modifier
+                        .fillMaxHeight(0.8f)
+                        .size(50.dp)
+                        .clickable { coroutine.launch {   swipeableState.animateTo(1) } }
+                        .padding(end = 10.dp),
+                    tint = Color(android.graphics.Color.parseColor("#006400")),
+                )
             }
         }
     }
