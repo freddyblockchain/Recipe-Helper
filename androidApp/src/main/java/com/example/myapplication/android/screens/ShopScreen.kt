@@ -20,8 +20,8 @@ import androidx.navigation.NavController
 import com.example.myapplication.Models.Ingredient
 import com.example.myapplication.Models.Recipe
 import com.example.myapplication.android.Components.IngredientForm
-import com.example.myapplication.android.Components.IngredientListView
 import com.example.myapplication.android.Components.RecipesListView
+import com.example.myapplication.android.Components.ShopListView
 import com.example.myapplication.android.SQLite.DBHandler
 
 @Composable
@@ -46,7 +46,7 @@ fun ShopScreen(navController: NavController, recipeName: String?) {
                 modifier = Modifier.fillMaxWidth()
             )
 
-            IngredientListView(ingredients)
+            ShopListView(ingredients)
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier

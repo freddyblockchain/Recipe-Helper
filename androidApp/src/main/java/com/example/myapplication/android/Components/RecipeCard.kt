@@ -13,6 +13,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,13 +26,28 @@ import com.example.myapplication.Models.Ingredient
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun RecipeCard(recipe: Recipe, onClick: (recipeName: String) -> Unit){
-    CartBar(onClick = {onClick(recipe.name)}) {
+fun RecipeCard(
+    recipe: Recipe,
+    onClick: (recipeName: String) -> Unit,
+    onDelete: (recipe: Recipe) -> Unit
+) {
+    Row(horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier.clickable { onClick(recipe.name) }.fillMaxWidth().height(90.dp),
+        verticalAlignment = Alignment.CenterVertically) {
         Text(
             recipe.name,
             modifier = Modifier.padding(start = 10.dp),
-            fontSize = 25.sp,
+            fontSize = 30.sp,
             style = TextStyle(fontFamily = androidx.compose.ui.text.font.FontFamily.Serif),
+        )
+        Icon(
+            Icons.Outlined.Delete,
+            contentDescription = "Ingredient Collected Button",
+            modifier = Modifier
+                .clickable { onDelete(recipe) }
+                .padding(end = 10.dp)
+                .size(30.dp),
+            tint = Color.Red
         )
     }
 }
