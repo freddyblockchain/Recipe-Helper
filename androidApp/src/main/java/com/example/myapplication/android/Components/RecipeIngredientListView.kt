@@ -9,17 +9,18 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.myapplication.Models.Ingredient
 import com.example.myapplication.Models.Recipe
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun RecipesListView(onClick: (recipeName: String) -> Unit, recipes: List<Recipe>, onDelete: (recipe: Recipe) -> Unit) {
+fun RecipesIngredientListView(recipe: Recipe, recipes: List<Ingredient>, onDelete: (ingredient: Ingredient, recipe: Recipe) -> Unit) {
     Box(modifier = Modifier.height(430.dp)) {
         LazyColumn(
             modifier = Modifier
         ) {
-            items(recipes) { recipe ->
-                RecipeCard(recipe = recipe, onClick = onClick, onDelete = onDelete)
+            items(recipes) {
+                RecipeIngredientCard(recipe,ingredient = it, onDelete = onDelete)
             }
         }
     }

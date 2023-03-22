@@ -6,6 +6,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -20,6 +21,7 @@ import androidx.navigation.NavController
 import com.example.myapplication.Models.Ingredient
 import com.example.myapplication.Models.Recipe
 import com.example.myapplication.android.Components.IngredientForm
+import com.example.myapplication.android.Components.RecipesIngredientListView
 import com.example.myapplication.android.Components.RecipesListView
 import com.example.myapplication.android.Components.ShopListView
 import com.example.myapplication.android.Navigation.NFTicketScreen
@@ -31,8 +33,7 @@ fun RecipeScreen(navController: NavController, recipeName: String?) {
     val ingredients = remember { mutableStateListOf<Ingredient>() }
 
     LaunchedEffect(Unit) {
-        val retrievedIngredients = db.readRecipeIngredients(Recipe(recipeName!!))
-        ingredients.addAll(retrievedIngredients)
+        recalculateIngredients(ingredients, db, recipeName!!)
     }
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -47,7 +48,6 @@ fun RecipeScreen(navController: NavController, recipeName: String?) {
                         navController.popBackStack()
                     }
                     .size(40.dp))
-            ArtistCard("RecipeScreen")
             Text(
                 recipeName ?: "",
                 textAlign = TextAlign.Center,
@@ -57,7 +57,7 @@ fun RecipeScreen(navController: NavController, recipeName: String?) {
                 modifier = Modifier.fillMaxWidth()
             )
 
-            ShopListView(ingredients)
+            RecipesIngredientListView(Recipe(recipeName!!), ingredients, onDelete = deleteRecipeIngredient(db, ingredients))
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier
@@ -65,19 +65,27 @@ fun RecipeScreen(navController: NavController, recipeName: String?) {
                     .padding(vertical = 20.dp)
             ) {
                 AddIngredientToRecipeButton(dbHandler = db, recipeName = recipeName!!) {
-                    ingredients.clear(); ingredients.addAll(
-                    db.readRecipeIngredients(
-                        Recipe(
-                            recipeName
-                        )
-                    )
-                )
+                    recalculateIngredients(ingredients, db, recipeName)
                 }
                 StartShopviewButton(recipeName, navController)
             }
 
         }
     }
+}
+
+private fun recalculateIngredients(
+    ingredients: MutableList<Ingredient>,
+    db: DBHandler,
+    recipeName: String
+) {
+    ingredients.clear(); ingredients.addAll(
+        db.readRecipeIngredients(
+            Recipe(
+                recipeName
+            )
+        )
+    )
 }
 
 @Composable
@@ -108,5 +116,12 @@ fun StartShopviewButton(recipeName: String, navController: NavController) {
         navController.navigate(NFTicketScreen.ShopScreen.route + "/$recipeName")
     }) {
         Text(text = "Start Shopping")
+    }
+}
+
+fun deleteRecipeIngredient(dbHandler: DBHandler, ingredients: MutableList<Ingredient>): (Ingredient, Recipe) -> Unit {
+    return { ingredient, recipe ->
+        dbHandler.deleteRecipeIngredient(ingredient, recipe)
+        recalculateIngredients(ingredients, dbHandler, recipe.name)
     }
 }

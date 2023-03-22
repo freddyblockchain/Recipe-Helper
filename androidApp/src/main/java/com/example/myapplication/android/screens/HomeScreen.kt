@@ -33,29 +33,15 @@ fun HomeScreen(navController: NavController){
         color = MaterialTheme.colors.background
     ) {
         Column {
-            RecipesListView(onClick = navigateToRecipe(navController), recipes)
-            AddRecipeButton(db) { recipes.clear(); recipes.addAll(getRecipesFromDb(db)) }
+            RecipesListView(onClick = navigateToRecipe(navController), recipes, onDelete = deleteRecipe(dbHandler = db, recipes))
+            AddRecipeButton(db) { recalculateRecipes(recipes, db) }
         }
     }
 }
 
-
-@Composable
-fun ArtistCard(text: String) {
-    Column {
-        Text(text)
-    }
-}
-@Preview
-@Composable
-fun ArtistPreview(){
-    val helloText = "helloText"
-    ArtistCard(text = helloText)
-}
-
-@Composable
-fun GreetingView(text: String) {
-    Text(text = text)
+fun recalculateRecipes(recipes: MutableList<Recipe>, db: DBHandler){
+    recipes.clear();
+    recipes.addAll(getRecipesFromDb(db))
 }
 @Composable
 fun AddRecipeButton(dbHandler: DBHandler,onRecipeAdded: () -> Unit){
@@ -77,5 +63,12 @@ fun getRecipesFromDb(dbHandler: DBHandler) :List<Recipe>{
 fun navigateToRecipe(navController: NavController): (String) -> Unit {
     return { recipeName ->
         navController.navigate("${NFTicketScreen.RecipeScreen.route}/${recipeName}")
+    }
+}
+
+fun deleteRecipe(dbHandler: DBHandler, recipes: MutableList<Recipe>): (Recipe) -> Unit {
+    return { recipe ->
+        dbHandler.deleteRecipe(recipe)
+        recalculateRecipes(recipes, dbHandler)
     }
 }

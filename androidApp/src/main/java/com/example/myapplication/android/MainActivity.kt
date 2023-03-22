@@ -15,7 +15,6 @@ import com.example.myapplication.Greeting
 import com.example.myapplication.Models.Ingredient
 import com.example.myapplication.android.Navigation.Navigation
 import com.example.myapplication.android.SQLite.DBHandler
-import com.example.myapplication.android.screens.GreetingView
 import com.example.myapplication.android.screens.HomeScreen
 
 class MainActivity : ComponentActivity() {

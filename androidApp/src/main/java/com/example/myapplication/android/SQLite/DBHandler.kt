@@ -180,6 +180,24 @@ class DBHandler(context: Context?) :
         cursor.close()
         return id
     }
+
+    fun deleteRecipe(recipe: Recipe) {
+        val db = this.writableDatabase
+        val recipeId = getIdFromName(RECIPE_TABLE, recipe.name) ?: return
+        db.delete(RECIPE_TABLE, "$ID_COL = ?", arrayOf(recipeId.toString()))
+        db.delete(RECIPE_INGREDIENT_TABLE, "recipe_id = ?", arrayOf(recipeId.toString()))
+        db.close()
+    }
+
+    fun deleteRecipeIngredient(ingredient: Ingredient, recipe: Recipe) {
+        val db = this.writableDatabase
+        val recipeId = getIdFromName(RECIPE_TABLE, recipe.name) ?: return
+        val ingredientId = getIdFromName(INGREDIENT_TABLE, ingredient.name) ?: return
+        db.delete(RECIPE_INGREDIENT_TABLE,
+            "recipe_id = ? AND ingredient_id = ?",
+            arrayOf(recipeId.toString(), ingredientId.toString()))
+        db.close()
+    }
 }
 
 fun <T> getDatabaseDataFromCursor(creationFunction: (Cursor) -> T, cursor: Cursor): ArrayList<T> {
@@ -196,3 +214,4 @@ fun <T> getDatabaseDataFromCursor(creationFunction: (Cursor) -> T, cursor: Curso
 
     return dataList
 }
+
