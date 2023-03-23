@@ -11,11 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.Models.Ingredient
 import com.example.myapplication.Models.Recipe
+import com.example.myapplication.android.mainAreaHeight
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RecipesIngredientListView(recipe: Recipe, recipes: List<Ingredient>, onDelete: (ingredient: Ingredient, recipe: Recipe) -> Unit) {
-    Box(modifier = Modifier.height(430.dp)) {
+    Box(modifier = Modifier.height(mainAreaHeight)) {
         LazyColumn(
             modifier = Modifier
         ) {

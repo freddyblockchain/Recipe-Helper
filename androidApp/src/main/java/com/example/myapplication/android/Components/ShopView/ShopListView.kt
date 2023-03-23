@@ -15,13 +15,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import com.example.myapplication.android.mainAreaHeight
 import kotlinx.coroutines.launch
 
 @Composable
 fun ShopListView(ingredients: List<Ingredient>) {
     val scrollState = rememberScrollState()
     val coroutine = rememberCoroutineScope()
-    Box(modifier = Modifier.height(430.dp)) {
+    Box(modifier = Modifier.height(mainAreaHeight)) {
         LazyColumn(modifier = Modifier
             .scrollable(
                 scrollState,

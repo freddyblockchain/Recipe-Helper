@@ -62,7 +62,6 @@ fun RecipeScreen(navController: NavController, recipeName: String?) {
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 20.dp)
             ) {
                 AddIngredientToRecipeButton(dbHandler = db, recipeName = recipeName!!) {
                     recalculateIngredients(ingredients, db, recipeName)
