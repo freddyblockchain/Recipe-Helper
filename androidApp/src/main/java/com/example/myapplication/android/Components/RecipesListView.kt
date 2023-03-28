@@ -10,12 +10,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.Models.Recipe
-import com.example.myapplication.android.mainAreaHeight
+import com.example.myapplication.android.getMainArea
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RecipesListView(onClick: (recipeName: String) -> Unit, recipes: List<Recipe>, onDelete: (recipe: Recipe) -> Unit) {
-    Box(modifier = Modifier.height(mainAreaHeight)) {
+    Box(modifier = Modifier.height(getMainArea().dp)) {
         LazyColumn(
             modifier = Modifier
         ) {
