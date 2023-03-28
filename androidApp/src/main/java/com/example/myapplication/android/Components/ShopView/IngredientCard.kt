@@ -8,13 +8,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.Models.Ingredient
+import com.example.myapplication.Models.RecipeIngredient
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun IngredientCard(ingredient: Ingredient){
+fun IngredientCard(ingredient: RecipeIngredient){
         ShopCartBar() {
                 Text(
-                    ingredient.name,
+                    ingredient.ingredientName,
                     modifier = Modifier.padding(start = 10.dp),
                     fontSize = 25.sp,
                     style = TextStyle(fontFamily = androidx.compose.ui.text.font.FontFamily.Serif),

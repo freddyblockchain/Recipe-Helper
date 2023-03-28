@@ -20,13 +20,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.Models.Ingredient
+import com.example.myapplication.Models.RecipeIngredient
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RecipeIngredientCard(
     recipe: Recipe,
-    ingredient: Ingredient,
-    onDelete: (ingredient: Ingredient, recipe: Recipe) -> Unit
+    recipeIngredient: RecipeIngredient,
+    onDelete: (recipeIngredient: RecipeIngredient, recipe: Recipe) -> Unit
 ) {
     Row(horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
@@ -42,13 +43,13 @@ fun RecipeIngredientCard(
         verticalAlignment = Alignment.CenterVertically) {
         Row {
             Text(
-                ingredient.amount ?: "",
+                recipeIngredient.amount?.toString() ?: "",
                 modifier = Modifier.padding(start = 10.dp),
                 fontSize = 30.sp,
                 style = TextStyle(fontFamily = androidx.compose.ui.text.font.FontFamily.Serif),
             )
             Text(
-                ingredient.name,
+                recipeIngredient.ingredientName,
                 modifier = Modifier.padding(start = 10.dp),
                 fontSize = 30.sp,
                 style = TextStyle(fontFamily = androidx.compose.ui.text.font.FontFamily.Serif),
@@ -59,7 +60,7 @@ fun RecipeIngredientCard(
             Icons.Outlined.Delete,
             contentDescription = "Ingredient Collected Button",
             modifier = Modifier
-                .clickable { onDelete(ingredient, recipe) }
+                .clickable { onDelete(recipeIngredient, recipe) }
                 .padding(end = 10.dp)
                 .size(30.dp),
             tint = Color.Red

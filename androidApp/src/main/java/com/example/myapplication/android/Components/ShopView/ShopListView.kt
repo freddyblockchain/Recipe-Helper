@@ -8,18 +8,18 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import com.example.myapplication.Models.Ingredient
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import com.example.myapplication.Models.RecipeIngredient
 import com.example.myapplication.android.getMainArea
 import kotlinx.coroutines.launch
 
 @Composable
-fun ShopListView(ingredients: List<Ingredient>) {
+fun ShopListView(recipeIngredients: List<RecipeIngredient>) {
     val scrollState = rememberScrollState()
     val coroutine = rememberCoroutineScope()
     Box(modifier = Modifier.height(getMainArea().dp)) {
@@ -34,7 +34,7 @@ fun ShopListView(ingredients: List<Ingredient>) {
                     coroutine.launch { scrollState.scrollBy(dragAmount) }
                 }
             }) {
-            items(ingredients) {
+            items(recipeIngredients) {
                 IngredientCard(ingredient = it)
             }
         }

@@ -6,34 +6,32 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myapplication.Models.Ingredient
 import com.example.myapplication.Models.Recipe
+import com.example.myapplication.Models.RecipeIngredient
 import com.example.myapplication.android.Components.IngredientForm
-import com.example.myapplication.android.Components.RecipesIngredientListView
-import com.example.myapplication.android.Components.RecipesListView
-import com.example.myapplication.android.Components.ShopListView
+import com.example.myapplication.android.Components.RecipeIngredientListView
 import com.example.myapplication.android.Navigation.NFTicketScreen
 import com.example.myapplication.android.SQLite.DBHandler
+import com.example.myapplication.android.SQLite.addIngredientToRecipe
+import com.example.myapplication.android.SQLite.deleteRecipeIngredient
+import com.example.myapplication.android.SQLite.readRecipeIngredients
 
 @Composable
 fun RecipeScreen(navController: NavController, recipeName: String?) {
     val db = DBHandler(LocalContext.current)
-    val ingredients = remember { mutableStateListOf<Ingredient>() }
+    val recipeIngredients = remember { mutableStateListOf<RecipeIngredient>() }
 
     LaunchedEffect(Unit) {
-        recalculateIngredients(ingredients, db, recipeName!!)
+        recalculateIngredients(recipeIngredients, db, recipeName!!)
     }
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -57,14 +55,14 @@ fun RecipeScreen(navController: NavController, recipeName: String?) {
                 modifier = Modifier.fillMaxWidth()
             )
 
-            RecipesIngredientListView(Recipe(recipeName!!), ingredients, onDelete = deleteRecipeIngredient(db, ingredients))
+            RecipeIngredientListView(Recipe(recipeName!!), recipeIngredients, onDelete = deleteRecipeIngredient(db, recipeIngredients))
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                AddIngredientToRecipeButton(dbHandler = db, recipeName = recipeName!!) {
-                    recalculateIngredients(ingredients, db, recipeName)
+                AddIngredientToRecipeButton(dbHandler = db, recipeName = recipeName) {
+                    recalculateIngredients(recipeIngredients, db, recipeName)
                 }
                 StartShopviewButton(recipeName, navController)
             }
@@ -74,11 +72,11 @@ fun RecipeScreen(navController: NavController, recipeName: String?) {
 }
 
 private fun recalculateIngredients(
-    ingredients: MutableList<Ingredient>,
+    recipeIngredients: MutableList<RecipeIngredient>,
     db: DBHandler,
     recipeName: String
 ) {
-    ingredients.clear(); ingredients.addAll(
+    recipeIngredients.clear(); recipeIngredients.addAll(
         db.readRecipeIngredients(
             Recipe(
                 recipeName
@@ -94,11 +92,12 @@ fun AddIngredientToRecipeButton(
     onRecipeAdded: () -> Unit
 ) {
     var openDialogState by remember { mutableStateOf(false) }
-    IngredientForm(onSubmit = { ingredient: Ingredient ->
+    IngredientForm(onSubmit = { recipeIngredient: RecipeIngredient ->
         dbHandler.addIngredientToRecipe(
-            ingredient,
+            recipeIngredient,
             Recipe(recipeName)
-        ); onRecipeAdded()
+        );
+        onRecipeAdded();
     }, showDialog = openDialogState) {
         openDialogState = false
     }
@@ -118,9 +117,9 @@ fun StartShopviewButton(recipeName: String, navController: NavController) {
     }
 }
 
-fun deleteRecipeIngredient(dbHandler: DBHandler, ingredients: MutableList<Ingredient>): (Ingredient, Recipe) -> Unit {
-    return { ingredient, recipe ->
-        dbHandler.deleteRecipeIngredient(ingredient, recipe)
-        recalculateIngredients(ingredients, dbHandler, recipe.name)
+fun deleteRecipeIngredient(dbHandler: DBHandler, recipeIngredients: MutableList<RecipeIngredient>): (RecipeIngredient, Recipe) -> Unit {
+    return { recipeIngredient, recipe ->
+        dbHandler.deleteRecipeIngredient(recipeIngredient, recipe)
+        recalculateIngredients(recipeIngredients, dbHandler, recipe.name)
     }
 }

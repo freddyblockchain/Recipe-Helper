@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -13,10 +12,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.myapplication.Models.Ingredient
+import com.example.myapplication.Models.RecipeIngredient
 import com.example.myapplication.android.SQLite.DBHandler
+import com.example.myapplication.android.SQLite.readIngredients
 
 @Composable
-fun IngredientForm(onSubmit: (Ingredient) -> Unit, showDialog: Boolean, onDismiss: () -> Unit) {
+fun IngredientForm(onSubmit: (RecipeIngredient) -> Unit, showDialog: Boolean, onDismiss: () -> Unit) {
     var inputName by remember { mutableStateOf("") }
     var amount by remember { mutableStateOf("1") }
     var suggestedIngredient by remember { mutableStateOf("") }
@@ -73,11 +74,11 @@ fun IngredientForm(onSubmit: (Ingredient) -> Unit, showDialog: Boolean, onDismis
                         OutlinedTextField(
                             value = amount,
                             onValueChange = { amount = it },
-                            label = { Text(text = "Amount") }
+                            label = { Text(text = "Amount") },
                         )
                         Spacer(modifier = Modifier.height(32.dp))
                         Button(
-                            onClick = { onSubmit(Ingredient(inputName, amount)); onDismiss() },
+                            onClick = { onSubmit(RecipeIngredient(inputName, amount.toIntOrNull() ?: 1 )); onDismiss() },
                             modifier = Modifier.fillMaxWidth(),
                             enabled = inputName.isNotBlank()
                         ) {

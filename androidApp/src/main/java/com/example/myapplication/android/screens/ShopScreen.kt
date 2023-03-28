@@ -1,37 +1,31 @@
 package com.example.myapplication.android.screens
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myapplication.Models.Ingredient
 import com.example.myapplication.Models.Recipe
-import com.example.myapplication.android.Components.IngredientForm
-import com.example.myapplication.android.Components.RecipesListView
+import com.example.myapplication.Models.RecipeIngredient
 import com.example.myapplication.android.Components.ShopListView
 import com.example.myapplication.android.SQLite.DBHandler
+import com.example.myapplication.android.SQLite.readRecipeIngredients
 
 @Composable
 fun ShopScreen(navController: NavController, recipeName: String?) {
     val db = DBHandler(LocalContext.current)
-    val ingredients = remember { mutableStateListOf<Ingredient>() }
+    val recipeIngredients = remember { mutableStateListOf<RecipeIngredient>() }
 
     LaunchedEffect(Unit) {
         val retrievedIngredients = db.readRecipeIngredients(Recipe(recipeName!!))
-        ingredients.addAll(retrievedIngredients)
+        recipeIngredients.addAll(retrievedIngredients)
     }
     Surface(
         modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
@@ -46,7 +40,7 @@ fun ShopScreen(navController: NavController, recipeName: String?) {
                 modifier = Modifier.fillMaxWidth()
             )
 
-            ShopListView(ingredients)
+            ShopListView(recipeIngredients)
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier
@@ -54,7 +48,7 @@ fun ShopScreen(navController: NavController, recipeName: String?) {
                     .padding(vertical = 20.dp)
             ) {
                 AddItemToCartButton(dbHandler = db, recipeName = recipeName!!) {
-                    ingredients.clear(); ingredients.addAll(
+                    recipeIngredients.clear(); recipeIngredients.addAll(
                     db.readRecipeIngredients(
                         Recipe(
                             recipeName
