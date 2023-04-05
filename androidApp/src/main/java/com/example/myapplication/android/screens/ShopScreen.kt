@@ -14,8 +14,10 @@ import androidx.navigation.NavController
 import com.example.myapplication.Models.Ingredient
 import com.example.myapplication.Models.Recipe
 import com.example.myapplication.Models.RecipeIngredient
+import com.example.myapplication.android.Components.IngredientForm
 import com.example.myapplication.android.Components.ShopListView
 import com.example.myapplication.android.SQLite.DBHandler
+import com.example.myapplication.android.SQLite.addIngredientToRecipe
 import com.example.myapplication.android.SQLite.readRecipeIngredients
 
 @Composable
@@ -47,15 +49,7 @@ fun ShopScreen(navController: NavController, recipeName: String?) {
                     .fillMaxWidth()
                     .padding(vertical = 20.dp)
             ) {
-                AddItemToCartButton(dbHandler = db, recipeName = recipeName!!) {
-                    recipeIngredients.clear(); recipeIngredients.addAll(
-                    db.readRecipeIngredients(
-                        Recipe(
-                            recipeName
-                        )
-                    )
-                )
-                }
+                AddItemToCartButton(recipeIngredients = recipeIngredients)
                 FinishShoppingButton(navController = navController)
             }
 
@@ -65,24 +59,17 @@ fun ShopScreen(navController: NavController, recipeName: String?) {
 
 @Composable
 fun AddItemToCartButton(
-    dbHandler: DBHandler, recipeName: String, onRecipeAdded: () -> Unit
+    recipeIngredients: MutableList<RecipeIngredient>
 ) {
-    /*var openDialogState by remember { mutableStateOf(false) }
-    IngredientForm(onSubmit = { ingredient: Ingredient ->
-        dbHandler.addIngredientToRecipe(
-            ingredient,
-            Recipe(recipeName)
-        ); onRecipeAdded()
+    var openDialogState by remember { mutableStateOf(false) }
+    IngredientForm(onSubmit = { recipeIngredient: RecipeIngredient ->
+        recipeIngredients.add(recipeIngredient)
     }, showDialog = openDialogState) {
         openDialogState = false
     }
     Button(onClick = {
-        //navController.navigate(NFTicketScreen.OtherScreen.route + "/$customText")
         openDialogState = true
     }) {
-        Text(text = "Add Ingredient")
-    }*/
-    Button(onClick = {}) {
         Text(text = "Add Item")
     }
 }
