@@ -42,7 +42,7 @@ fun ShopScreen(navController: NavController, recipeName: String?) {
                 modifier = Modifier.fillMaxWidth()
             )
 
-            ShopListView(recipeIngredients)
+            ShopListView(recipeIngredients, removeIngredientFunction(recipeIngredients))
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier
@@ -78,5 +78,11 @@ fun AddItemToCartButton(
 fun FinishShoppingButton(navController: NavController) {
     Button(onClick = { navController.popBackStack() }) {
         Text(text = "Finish Shopping")
+    }
+}
+
+fun removeIngredientFunction(recipeIngredients: MutableList<RecipeIngredient>): (RecipeIngredient) -> Unit{
+    return { recipeIngredient ->
+        recipeIngredients.remove(recipeIngredient)
     }
 }

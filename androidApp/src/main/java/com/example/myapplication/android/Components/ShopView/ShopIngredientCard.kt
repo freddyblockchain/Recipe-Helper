@@ -15,19 +15,33 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.IntOffset
-import kotlinx.coroutines.launch
+import androidx.compose.ui.unit.sp
+import com.example.myapplication.Models.RecipeIngredient
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ShopCartBar(onClick: () -> Unit = {}, content: @Composable() (RowScope.() -> Unit)) {
+fun ShopIngredientCard(ingredient: RecipeIngredient, onSwipe: (ingredient: RecipeIngredient) -> Unit) {
     val cardHeight = 70.dp
     val swipeableState = rememberSwipeableState(0)
     val maxWidth =
-        with(LocalDensity.current) { (LocalConfiguration.current.screenWidthDp.dp - 45.dp).toPx() }
+        with(LocalDensity.current) { (LocalConfiguration.current.screenWidthDp.dp).toPx() }
     val anchors = mapOf(0f to 0, maxWidth to 1) // Maps anchor points (in px) to states
-    val coroutine = rememberCoroutineScope()
+    val scope = rememberCoroutineScope()
+
+
+    DisposableEffect(swipeableState.currentValue) {
+        onDispose {
+            if(swipeableState.currentValue == 1){
+                onSwipe(ingredient)
+            }
+        }
+    }
+
+
     Box(
         modifier = Modifier
             .swipeable(
@@ -35,8 +49,7 @@ fun ShopCartBar(onClick: () -> Unit = {}, content: @Composable() (RowScope.() ->
                 anchors = anchors,
                 thresholds = { _, _ -> FractionalThreshold(0.5f) },
                 orientation = Orientation.Horizontal,
-
-                )
+            )
             .offset() { IntOffset(swipeableState.offset.value.roundToInt(), 0) }
     ) {
         Card(
@@ -44,10 +57,7 @@ fun ShopCartBar(onClick: () -> Unit = {}, content: @Composable() (RowScope.() ->
                 .fillMaxWidth()
                 .padding(start = 30.dp, end = 30.dp, top = 16.dp)
                 .height(cardHeight)
-                .border(2.dp, Color.Black)
-                .clickable {
-                    onClick()
-                },
+                .border(2.dp, Color.Black),
 
             elevation = 10.dp,
             backgroundColor = Color.LightGray,
@@ -57,14 +67,19 @@ fun ShopCartBar(onClick: () -> Unit = {}, content: @Composable() (RowScope.() ->
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxHeight()
             ) {
-                content()
+                Text(
+                    ingredient.ingredientName,
+                    modifier = Modifier.padding(start = 10.dp),
+                    fontSize = 25.sp,
+                    style = TextStyle(fontFamily = FontFamily.Serif),
+                )
                 Icon(
                     Icons.Outlined.Check,
                     contentDescription = "Ingredient Collected Button",
                     modifier = Modifier
                         .fillMaxHeight(0.8f)
                         .size(50.dp)
-                        .clickable { coroutine.launch {   swipeableState.animateTo(1) } }
+                        .clickable { onSwipe(ingredient) }
                         .padding(end = 10.dp),
                     tint = Color(android.graphics.Color.parseColor("#006400")),
                 )

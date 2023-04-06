@@ -19,7 +19,7 @@ import com.example.myapplication.android.getMainArea
 import kotlinx.coroutines.launch
 
 @Composable
-fun ShopListView(recipeIngredients: List<RecipeIngredient>) {
+fun ShopListView(recipeIngredients: MutableList<RecipeIngredient>, removeIngredientFunction: (RecipeIngredient) -> Unit) {
     val scrollState = rememberScrollState()
     val coroutine = rememberCoroutineScope()
     Box(modifier = Modifier.height(getMainArea().dp)) {
@@ -34,8 +34,8 @@ fun ShopListView(recipeIngredients: List<RecipeIngredient>) {
                     coroutine.launch { scrollState.scrollBy(dragAmount) }
                 }
             }) {
-            items(recipeIngredients) {
-                IngredientCard(ingredient = it)
+            items(recipeIngredients, key = {ingredient -> ingredient.ingredientName}) {
+                ShopIngredientCard(ingredient = it, removeIngredientFunction)
             }
         }
     }
