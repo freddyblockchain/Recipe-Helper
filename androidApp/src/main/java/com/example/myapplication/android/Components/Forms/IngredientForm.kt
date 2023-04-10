@@ -1,5 +1,6 @@
 package com.example.myapplication.android.Components
 
+import com.example.myapplication.Models.RecipeIngredient
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -12,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.myapplication.Models.Ingredient
-import com.example.myapplication.Models.RecipeIngredient
 import com.example.myapplication.android.SQLite.DBHandler
 import com.example.myapplication.android.SQLite.readIngredients
 
@@ -20,7 +20,6 @@ import com.example.myapplication.android.SQLite.readIngredients
 fun IngredientForm(onSubmit: (RecipeIngredient) -> Unit, showDialog: Boolean, onDismiss: () -> Unit) {
     var inputName by remember { mutableStateOf("") }
     var amount by remember { mutableStateOf("1") }
-    var suggestedIngredient by remember { mutableStateOf("") }
     var suggestedIngredients = remember { mutableStateListOf("") }
     val allIngredients = getAllIngredientsFromDb().map { it.name }
 

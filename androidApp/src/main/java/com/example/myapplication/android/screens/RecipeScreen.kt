@@ -1,5 +1,6 @@
 package com.example.myapplication.android.screens
 
+import com.example.myapplication.Models.RecipeIngredient
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -14,9 +15,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.myapplication.Models.Ingredient
 import com.example.myapplication.Models.Recipe
-import com.example.myapplication.Models.RecipeIngredient
 import com.example.myapplication.android.Components.IngredientForm
 import com.example.myapplication.android.Components.RecipeIngredientListView
 import com.example.myapplication.android.Navigation.NFTicketScreen

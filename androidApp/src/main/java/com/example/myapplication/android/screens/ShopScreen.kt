@@ -1,9 +1,13 @@
 package com.example.myapplication.android.screens
 
+import RecipeIngredientSaver
+import com.example.myapplication.Models.RecipeIngredient
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -11,23 +15,22 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.myapplication.Models.Ingredient
 import com.example.myapplication.Models.Recipe
-import com.example.myapplication.Models.RecipeIngredient
 import com.example.myapplication.android.Components.IngredientForm
 import com.example.myapplication.android.Components.ShopListView
 import com.example.myapplication.android.SQLite.DBHandler
-import com.example.myapplication.android.SQLite.addIngredientToRecipe
 import com.example.myapplication.android.SQLite.readRecipeIngredients
 
 @Composable
 fun ShopScreen(navController: NavController, recipeName: String?) {
     val db = DBHandler(LocalContext.current)
-    val recipeIngredients = remember { mutableStateListOf<RecipeIngredient>() }
-
-    LaunchedEffect(Unit) {
+    val configuration = LocalConfiguration.current
+    val orientation = configuration.orientation
+    val recipeIngredients = rememberSaveable(saver = RecipeIngredientSaver) {
         val retrievedIngredients = db.readRecipeIngredients(Recipe(recipeName!!))
-        recipeIngredients.addAll(retrievedIngredients)
+        val stateList = mutableStateListOf<RecipeIngredient>()
+        stateList.addAll(retrievedIngredients)
+        stateList
     }
     Surface(
         modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
@@ -63,7 +66,10 @@ fun AddItemToCartButton(
 ) {
     var openDialogState by remember { mutableStateOf(false) }
     IngredientForm(onSubmit = { recipeIngredient: RecipeIngredient ->
-        recipeIngredients.add(recipeIngredient)
+        val ingredientNames = recipeIngredients.map { it.ingredientName }
+        if (recipeIngredient.ingredientName !in ingredientNames) {
+            recipeIngredients.add(recipeIngredient)
+        }
     }, showDialog = openDialogState) {
         openDialogState = false
     }
@@ -81,7 +87,7 @@ fun FinishShoppingButton(navController: NavController) {
     }
 }
 
-fun removeIngredientFunction(recipeIngredients: MutableList<RecipeIngredient>): (RecipeIngredient) -> Unit{
+fun removeIngredientFunction(recipeIngredients: MutableList<RecipeIngredient>): (RecipeIngredient) -> Unit {
     return { recipeIngredient ->
         recipeIngredients.remove(recipeIngredient)
     }

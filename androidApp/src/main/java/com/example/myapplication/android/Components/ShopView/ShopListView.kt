@@ -13,6 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.Models.RecipeIngredient
 import com.example.myapplication.android.getMainArea
@@ -22,6 +23,9 @@ import kotlinx.coroutines.launch
 fun ShopListView(recipeIngredients: MutableList<RecipeIngredient>, removeIngredientFunction: (RecipeIngredient) -> Unit) {
     val scrollState = rememberScrollState()
     val coroutine = rememberCoroutineScope()
+
+    val configuration = LocalConfiguration.current
+    val orientation = configuration.orientation
     Box(modifier = Modifier.height(getMainArea().dp)) {
         LazyColumn(modifier = Modifier
             .scrollable(

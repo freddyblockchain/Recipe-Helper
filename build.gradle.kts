@@ -13,6 +13,7 @@ buildscript {
     dependencies {
         // ...
         classpath("com.squareup.sqldelight:gradle-plugin:$sqlDelightVersion")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.20-RC")
     }
 }
 
