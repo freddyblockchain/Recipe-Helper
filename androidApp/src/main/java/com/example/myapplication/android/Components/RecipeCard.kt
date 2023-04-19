@@ -1,5 +1,6 @@
 package com.example.myapplication.android.Components
 
+import RecipeHelperAlertDialog
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import com.example.myapplication.Models.Recipe
@@ -12,6 +13,9 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +31,9 @@ fun RecipeCard(
     onClick: (recipeName: String) -> Unit,
     onDelete: (recipe: Recipe) -> Unit
 ) {
+    val dialogState: MutableState<Boolean> = remember { mutableStateOf(false) }
+
+
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
@@ -42,6 +49,15 @@ fun RecipeCard(
             .border(1.dp, Color.Black, RectangleShape),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        RecipeHelperAlertDialog(
+            confirmText = "Delete Recipe",
+            dismissText = "Cancel",
+            dialogText = "Do you want to delete the recipe?",
+            dialogTitle = "Delete Recipe?",
+            dialogState = dialogState
+        ) {
+            onDelete(recipe)
+        }
         Text(
             recipe.name,
             modifier = Modifier.padding(start = 10.dp),
@@ -52,7 +68,7 @@ fun RecipeCard(
             Icons.Outlined.Delete,
             contentDescription = "Ingredient Collected Button",
             modifier = Modifier
-                .clickable { onDelete(recipe) }
+                .clickable {dialogState.value = true}
                 .padding(end = 10.dp)
                 .size(30.dp),
             tint = Color.Red
