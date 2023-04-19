@@ -67,12 +67,20 @@ fun ShopIngredientCard(ingredient: RecipeIngredient, onSwipe: (ingredient: Recip
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxHeight()
             ) {
-                Text(
-                    ingredient.ingredientName,
-                    modifier = Modifier.padding(start = 10.dp),
-                    fontSize = 25.sp,
-                    style = TextStyle(fontFamily = FontFamily.Serif),
-                )
+                Row(){
+                    Text(
+                        ingredient.amount.toString(),
+                        modifier = Modifier.padding(start = 10.dp),
+                        fontSize = 25.sp,
+                        style = TextStyle(fontFamily = FontFamily.Serif),
+                    )
+                    Text(
+                        ingredient.ingredientName,
+                        modifier = Modifier.padding(start = 10.dp),
+                        fontSize = 25.sp,
+                        style = TextStyle(fontFamily = FontFamily.Serif),
+                    )
+                }
                 Icon(
                     Icons.Outlined.Check,
                     contentDescription = "Ingredient Collected Button",

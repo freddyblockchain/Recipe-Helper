@@ -38,7 +38,7 @@ fun RecipeIngredientCard(
             )
             .fillMaxWidth()
             .height(60.dp)
-            .background(Color(100, 198, 198), RectangleShape)
+            .background(Color(120, 170, 220), RectangleShape)
             .border(1.dp, Black, RectangleShape),
         verticalAlignment = Alignment.CenterVertically) {
         Row {
