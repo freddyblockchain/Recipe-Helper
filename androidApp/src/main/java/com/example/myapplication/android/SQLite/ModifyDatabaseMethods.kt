@@ -1,4 +1,4 @@
-package com.example.myapplication.android.SQLite
+package com.recipehelper.SQLite
 
 import android.content.ContentValues
 import com.example.myapplication.Models.Ingredient

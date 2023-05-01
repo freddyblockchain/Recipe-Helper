@@ -1,4 +1,4 @@
-package com.example.myapplication.android.screens
+package com.recipehelper.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -18,13 +18,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myapplication.Models.Recipe
-import com.example.myapplication.android.Components.RecipeForm
-import com.example.myapplication.android.Components.RecipesListView
-import com.example.myapplication.android.Navigation.NFTicketScreen
-import com.example.myapplication.android.SQLite.DBHandler
-import com.example.myapplication.android.SQLite.addRecipe
-import com.example.myapplication.android.SQLite.deleteRecipe
-import com.example.myapplication.android.SQLite.readRecipes
+import com.recipehelper.Components.RecipeForm
+import com.recipehelper.Components.RecipesListView
+import com.recipehelper.Navigation.NFTicketScreen
+import com.recipehelper.SQLite.DBHandler
+import com.recipehelper.SQLite.addRecipe
+import com.recipehelper.SQLite.deleteRecipe
+import com.recipehelper.SQLite.readRecipes
 
 @Composable
 fun HomeScreen(navController: NavController){

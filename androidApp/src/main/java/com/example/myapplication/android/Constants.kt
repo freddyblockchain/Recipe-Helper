@@ -1,4 +1,4 @@
-package com.example.myapplication.android
+package com.recipehelper
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration

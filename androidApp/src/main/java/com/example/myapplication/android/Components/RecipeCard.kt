@@ -1,4 +1,4 @@
-package com.example.myapplication.android.Components
+package com.recipehelper.Components
 
 import RecipeHelperAlertDialog
 import androidx.compose.foundation.background

@@ -1,4 +1,4 @@
-package com.example.myapplication.android.screens
+package com.recipehelper.screens
 
 import RecipeIngredientSaver
 import com.example.myapplication.Models.RecipeIngredient
@@ -16,10 +16,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myapplication.Models.Recipe
-import com.example.myapplication.android.Components.IngredientForm
-import com.example.myapplication.android.Components.ShopListView
-import com.example.myapplication.android.SQLite.DBHandler
-import com.example.myapplication.android.SQLite.readRecipeIngredients
+import com.recipehelper.Components.IngredientForm
+import com.recipehelper.Components.ShopListView
+import com.recipehelper.SQLite.DBHandler
+import com.recipehelper.SQLite.readRecipeIngredients
 
 @Composable
 fun ShopScreen(navController: NavController, recipeName: String?) {

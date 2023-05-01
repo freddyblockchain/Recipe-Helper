@@ -1,4 +1,4 @@
-package com.example.myapplication.android.SQLite
+package com.recipehelper.SQLite
 import com.example.myapplication.Models.RecipeIngredient
 import android.database.Cursor
 import com.example.myapplication.Models.*

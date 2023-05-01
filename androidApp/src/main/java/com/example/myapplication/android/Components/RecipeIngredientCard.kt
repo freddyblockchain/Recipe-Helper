@@ -1,4 +1,4 @@
-package com.example.myapplication.android.Components
+package com.recipehelper.Components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import com.example.myapplication.Models.Recipe

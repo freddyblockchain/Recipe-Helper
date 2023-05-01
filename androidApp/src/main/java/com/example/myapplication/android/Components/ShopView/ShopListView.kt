@@ -1,4 +1,4 @@
-package com.example.myapplication.android.Components
+package com.recipehelper.Components
 
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
@@ -16,7 +16,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.Models.RecipeIngredient
-import com.example.myapplication.android.getMainArea
+import com.recipehelper.getMainArea
 import kotlinx.coroutines.launch
 
 @Composable

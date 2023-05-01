@@ -1,4 +1,4 @@
-package com.example.myapplication.android.SQLite
+package com.recipehelper.SQLite
 
 import android.content.ContentValues
 import android.content.Context
@@ -8,11 +8,11 @@ import android.database.sqlite.SQLiteOpenHelper
 import com.example.myapplication.Models.Ingredient
 import com.example.myapplication.Models.Recipe
 import com.example.myapplication.Models.RecipeIngredient
-import com.example.myapplication.android.SQLite.DBConstants.Companion.ID_COL
-import com.example.myapplication.android.SQLite.DBConstants.Companion.INGREDIENT_TABLE
-import com.example.myapplication.android.SQLite.DBConstants.Companion.NAME_COL
-import com.example.myapplication.android.SQLite.DBConstants.Companion.RECIPE_INGREDIENT_TABLE
-import com.example.myapplication.android.SQLite.DBConstants.Companion.RECIPE_TABLE
+import com.recipehelper.SQLite.DBConstants.Companion.ID_COL
+import com.recipehelper.SQLite.DBConstants.Companion.INGREDIENT_TABLE
+import com.recipehelper.SQLite.DBConstants.Companion.NAME_COL
+import com.recipehelper.SQLite.DBConstants.Companion.RECIPE_INGREDIENT_TABLE
+import com.recipehelper.SQLite.DBConstants.Companion.RECIPE_TABLE
 
 class DBHandler(context: Context?) :
     SQLiteOpenHelper(context, DBConstants.DB_NAME, null, DBConstants.DB_VERSION + 14) {

@@ -1,4 +1,4 @@
-package com.example.myapplication.android.SQLite
+package com.recipehelper.SQLite
 
 class DBConstants {
     companion object {

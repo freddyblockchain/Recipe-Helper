@@ -1,14 +1,22 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("kotlin-parcelize")
     kotlin("android")
 }
 
+val keystoreProperties = Properties().apply {
+    val fileInputStream = FileInputStream(rootProject.file("keystore.properties"))
+    load(fileInputStream)
+}
+
 android {
-    namespace = "com.example.myapplication.android"
+    namespace = "com.recipehelper"
     compileSdk = 33
     defaultConfig {
-        applicationId = "com.example.myapplication.android"
+        applicationId = "com.recipehelper"
         minSdk = 21
         targetSdk = 33
         versionCode = 1
@@ -25,17 +33,28 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = File(keystoreProperties["storeFile"].toString())
+            storePassword = keystoreProperties["storePassword"].toString()
+            keyAlias = keystoreProperties["keyAlias"].toString()
+            keyPassword = keystoreProperties["keyPassword"].toString()
+        }
+    }
+    buildTypes {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
     }
 }
 

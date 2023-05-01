@@ -1,4 +1,4 @@
-package com.example.myapplication.android
+package com.recipehelper
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape

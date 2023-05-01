@@ -1,4 +1,4 @@
-package com.example.myapplication.android.screens
+package com.recipehelper.screens
 
 import com.example.myapplication.Models.RecipeIngredient
 import androidx.compose.foundation.clickable
@@ -16,13 +16,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.myapplication.Models.Recipe
-import com.example.myapplication.android.Components.IngredientForm
-import com.example.myapplication.android.Components.RecipeIngredientListView
-import com.example.myapplication.android.Navigation.NFTicketScreen
-import com.example.myapplication.android.SQLite.DBHandler
-import com.example.myapplication.android.SQLite.addIngredientToRecipe
-import com.example.myapplication.android.SQLite.deleteRecipeIngredient
-import com.example.myapplication.android.SQLite.readRecipeIngredients
+import com.recipehelper.Components.IngredientForm
+import com.recipehelper.Components.RecipeIngredientListView
+import com.recipehelper.Navigation.NFTicketScreen
+import com.recipehelper.SQLite.DBHandler
+import com.recipehelper.SQLite.addIngredientToRecipe
+import com.recipehelper.SQLite.deleteRecipeIngredient
+import com.recipehelper.SQLite.readRecipeIngredients
 
 @Composable
 fun RecipeScreen(navController: NavController, recipeName: String?) {

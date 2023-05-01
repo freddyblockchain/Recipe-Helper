@@ -1,4 +1,4 @@
-package com.example.myapplication.android.Navigation
+package com.recipehelper.Navigation
 
 sealed class NFTicketScreen(val route: String) {
     object HomeScreen : NFTicketScreen("home_screen")

@@ -1,4 +1,4 @@
-package com.example.myapplication.android.Components
+package com.recipehelper.Components
 
 import com.example.myapplication.Models.RecipeIngredient
 import androidx.compose.foundation.clickable
@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.myapplication.Models.Ingredient
-import com.example.myapplication.android.SQLite.DBHandler
-import com.example.myapplication.android.SQLite.readIngredients
+import com.recipehelper.SQLite.DBHandler
+import com.recipehelper.SQLite.readIngredients
 
 @Composable
 fun IngredientForm(onSubmit: (RecipeIngredient) -> Unit, showDialog: Boolean, onDismiss: () -> Unit) {

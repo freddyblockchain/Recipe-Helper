@@ -1,4 +1,4 @@
-package com.example.myapplication.android
+package com.recipehelper
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,9 +13,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.Greeting
 import com.example.myapplication.Models.Ingredient
-import com.example.myapplication.android.Navigation.Navigation
-import com.example.myapplication.android.SQLite.DBHandler
-import com.example.myapplication.android.screens.HomeScreen
+import com.recipehelper.Navigation.Navigation
+import com.recipehelper.SQLite.DBHandler
+import com.recipehelper.screens.HomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
