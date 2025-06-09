@@ -18,7 +18,7 @@ import androidx.navigation.NavController
 import com.example.myapplication.Models.Recipe
 import com.recipehelper.Components.IngredientForm
 import com.recipehelper.Components.RecipeIngredientListView
-import com.recipehelper.Navigation.NFTicketScreen
+import com.recipehelper.Navigation.Screens
 import com.recipehelper.SQLite.DBHandler
 import com.recipehelper.SQLite.addIngredientToRecipe
 import com.recipehelper.SQLite.deleteRecipeIngredient
@@ -110,7 +110,7 @@ fun AddIngredientToRecipeButton(
 @Composable
 fun StartShopviewButton(recipeName: String, navController: NavController) {
     Button(onClick = {
-        navController.navigate(NFTicketScreen.ShopScreen.route + "/$recipeName")
+        navController.navigate(Screens.ShopScreen.route + "/$recipeName")
     }) {
         Text(text = "Start Shopping")
     }

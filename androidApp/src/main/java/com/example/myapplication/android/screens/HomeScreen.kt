@@ -20,7 +20,7 @@ import androidx.navigation.NavController
 import com.example.myapplication.Models.Recipe
 import com.recipehelper.Components.RecipeForm
 import com.recipehelper.Components.RecipesListView
-import com.recipehelper.Navigation.NFTicketScreen
+import com.recipehelper.Navigation.Screens
 import com.recipehelper.SQLite.DBHandler
 import com.recipehelper.SQLite.addRecipe
 import com.recipehelper.SQLite.deleteRecipe
@@ -77,7 +77,7 @@ fun getRecipesFromDb(dbHandler: DBHandler) :List<Recipe>{
 
 fun navigateToRecipe(navController: NavController): (String) -> Unit {
     return { recipeName ->
-        navController.navigate("${NFTicketScreen.RecipeScreen.route}/${recipeName}")
+        navController.navigate("${Screens.RecipeScreen.route}/${recipeName}")
     }
 }
 

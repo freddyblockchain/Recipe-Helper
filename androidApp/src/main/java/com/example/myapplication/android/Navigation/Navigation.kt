@@ -14,11 +14,11 @@ import com.recipehelper.screens.ShopScreen
 fun Navigation(){
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = NFTicketScreen.HomeScreen.route){
-        composable(route = NFTicketScreen.HomeScreen.route) {
+    NavHost(navController = navController, startDestination = Screens.HomeScreen.route){
+        composable(route = Screens.HomeScreen.route) {
             HomeScreen(navController = navController)
         }
-        composable(route = NFTicketScreen.RecipeScreen.route + "/{recipeName}",
+        composable(route = Screens.RecipeScreen.route + "/{recipeName}",
             arguments = listOf(navArgument(name = "recipeName") {
             type = NavType.StringType
         })) { entry ->
@@ -27,7 +27,7 @@ fun Navigation(){
                 entry.arguments?.getString("recipeName")
             )
         }
-        composable(route = NFTicketScreen.ShopScreen.route + "/{recipeName}",
+        composable(route = Screens.ShopScreen.route + "/{recipeName}",
             arguments = listOf(navArgument(name = "recipeName") {
                 type = NavType.StringType
             })) { entry ->
