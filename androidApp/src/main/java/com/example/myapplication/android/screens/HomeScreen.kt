@@ -53,11 +53,6 @@ fun HomeScreen(navController: NavController){
         }
     }
 }
-
-fun recalculateRecipes(recipes: MutableList<Recipe>, db: DBHandler){
-    recipes.clear();
-    recipes.addAll(getRecipesFromDb(db))
-}
 @Composable
 fun ColumnScope.AddRecipeButton(dbHandler: DBHandler,onRecipeAdded: () -> Unit){
     var openDialogState by remember { mutableStateOf(false) }
@@ -86,4 +81,8 @@ fun deleteRecipe(dbHandler: DBHandler, recipes: MutableList<Recipe>): (Recipe) -
         dbHandler.deleteRecipe(recipe)
         recalculateRecipes(recipes, dbHandler)
     }
+}
+fun recalculateRecipes(recipes: MutableList<Recipe>, db: DBHandler){
+    recipes.clear();
+    recipes.addAll(getRecipesFromDb(db))
 }
